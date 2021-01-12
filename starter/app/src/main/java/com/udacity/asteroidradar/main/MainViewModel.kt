@@ -3,7 +3,14 @@ package com.udacity.asteroidradar.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.api.NeoWsApi
+import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import kotlinx.coroutines.launch
+import timber.log.Timber
+
+private const val API_KEY = " glq0VDZWt07dtBPsgfYjslGmd400xXadacFfr6YJ"
 
 class MainViewModel : ViewModel() {
 
@@ -16,7 +23,18 @@ class MainViewModel : ViewModel() {
         get() = _navigateToSelectedAsteroid
 
     init {
-        populateWithDummyData()
+        getAsteroids()
+    }
+
+    private fun getAsteroids() {
+        viewModelScope.launch {
+            try {
+                val jsonResult = NeoWsApi.retrofitService.getAsteroids("2021-02-01","2021-02-02", API_KEY)
+                _asteroidList.value = parseAsteroidsJsonResult(jsonResult)
+            } catch (e: Exception) {
+                _asteroidList.value = ArrayList()
+            }
+        }
     }
 
     fun navigateToSelectedAsteroid(selectedAsteroid: Asteroid) {

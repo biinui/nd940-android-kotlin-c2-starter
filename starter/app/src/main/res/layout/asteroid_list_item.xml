@@ -22,10 +22,11 @@
             android:contentDescription="@string/asteroid_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:text="@{asteroid.codename}"
             tools:text="@string/asteroid_name" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/asteroid_close_approach_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -35,7 +36,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/asteroid_name_text"
-            tools:text="@string/asteroid_close_approach_date" />
+            tools:text="@string/asteroid_close_approach_date"
+            android:text="@{asteroid.closeApproachDate}"/>
 
         <ImageView
             android:id="@+id/imageView"

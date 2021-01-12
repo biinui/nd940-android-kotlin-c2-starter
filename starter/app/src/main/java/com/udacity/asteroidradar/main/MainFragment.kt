@@ -16,21 +16,30 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentMainBinding = DataBindingUtil.inflate( inflater, R.layout.fragment_main, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding: FragmentMainBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.asteroidRecycler.adapter = AsteroidListAdapter(AsteroidListAdapter.OnClickListener { selectedAsteroid ->
-            viewModel.navigateToSelectedAsteroid(selectedAsteroid)
-        })
+        binding.asteroidRecycler.adapter =
+            AsteroidListAdapter(AsteroidListAdapter.OnClickListener { selectedAsteroid ->
+                viewModel.navigateToSelectedAsteroid(selectedAsteroid)
+            })
 
-        viewModel.navigateToSelectedAsteroid.observe(viewLifecycleOwner, Observer { selectedAsteroid ->
-            selectedAsteroid?.let {
-                this.findNavController().navigate(MainFragmentDirections.actionShowDetail(selectedAsteroid))
-                viewModel.navigateToSelectedAsteroidDone()
-            }
-        })
+        viewModel.navigateToSelectedAsteroid.observe(
+            viewLifecycleOwner,
+            Observer { selectedAsteroid ->
+                selectedAsteroid?.let {
+                    this.findNavController()
+                        .navigate(MainFragmentDirections.actionShowDetail(selectedAsteroid))
+                    viewModel.navigateToSelectedAsteroidDone()
+                }
+            })
 
         setHasOptionsMenu(true)
 
