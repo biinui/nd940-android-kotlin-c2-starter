@@ -10,7 +10,7 @@
 
         <variable
             name="pictureOfDay"
-            type="com.udacity.asteroidradar.data.PictureOfDay" />
+            type="com.udacity.asteroidradar.domain.PictureOfDay" />
 
     </data>
 
