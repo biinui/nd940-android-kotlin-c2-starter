@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.api.NeoWsApi
+import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -25,14 +25,27 @@ class MainViewModel : ViewModel() {
 
     init {
         getAsteroids()
+        getImageOfTheDay()
     }
 
     private fun getAsteroids() {
         viewModelScope.launch {
             try {
-                val jsonStr = NeoWsApi.retrofitScalarService.getAsteroids("2021-01-13", API_KEY)
+                val jsonStr = NasaApi.RetrofitScalarService.getAsteroids("2021-01-13", API_KEY)
                 val jsonObject = JSONObject(jsonStr)
                 _asteroidList.value = parseAsteroidsJsonResult(jsonObject)
+                Timber.i(asteroidList.value?.size.toString())
+            } catch (e: Exception) {
+                Timber.i(e.message)
+            }
+        }
+    }
+
+    private fun getImageOfTheDay() {
+        viewModelScope.launch {
+            try {
+                val jsonObject = NasaApi.RetrofitJsonService.getImageOfTheDay(API_KEY)
+                Timber.i(jsonObject.toString())
             } catch (e: Exception) {
                 Timber.i(e.message)
             }
