@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.data.PictureOfDay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
@@ -23,9 +24,13 @@ class MainViewModel : ViewModel() {
     val navigateToSelectedAsteroid: LiveData<Asteroid>
         get() = _navigateToSelectedAsteroid
 
+    private val _pictureOfDay = MutableLiveData<PictureOfDay>()
+    val pictureOfDay: LiveData<PictureOfDay>
+        get() = _pictureOfDay
+
     init {
         getAsteroids()
-        getImageOfTheDay()
+        getPictureOfDay()
     }
 
     private fun getAsteroids() {
@@ -41,11 +46,11 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private fun getImageOfTheDay() {
+    private fun getPictureOfDay() {
         viewModelScope.launch {
             try {
-                val jsonObject = NasaApi.RetrofitJsonService.getImageOfTheDay(API_KEY)
-                Timber.i(jsonObject.toString())
+                _pictureOfDay.value = NasaApi.RetrofitJsonService.getImageOfTheDay(API_KEY)
+                Timber.i(_pictureOfDay.value?.url)
             } catch (e: Exception) {
                 Timber.i(e.message)
             }

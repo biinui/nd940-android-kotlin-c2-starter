@@ -32,6 +32,12 @@ class MainFragment : Fragment() {
             }
         })
 
+        viewModel.pictureOfDay.observe(viewLifecycleOwner, Observer { pictureOfDay ->
+            pictureOfDay?.let {
+                binding.pictureOfDay = pictureOfDay
+            }
+        })
+
         setHasOptionsMenu(true)
 
         return binding.root

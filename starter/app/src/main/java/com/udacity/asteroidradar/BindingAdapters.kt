@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.main.AsteroidListAdapter
 
 @BindingAdapter("statusIcon")
@@ -46,4 +47,11 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Asteroid>?) {
     val adapter = recyclerView.adapter as AsteroidListAdapter
     adapter.submitList(data)
+}
+
+@BindingAdapter("pictureOfDay")
+fun bindPictureOfDay(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        Picasso.get().load(imgUrl).into(imgView);
+    }
 }
