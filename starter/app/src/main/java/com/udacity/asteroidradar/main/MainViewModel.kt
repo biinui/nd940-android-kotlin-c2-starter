@@ -1,22 +1,26 @@
 package com.udacity.asteroidradar.main
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.api.NasaApi
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.database.AsteroidDatabase
+import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.domain.PictureOfDay
+import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import timber.log.Timber
 
 private const val API_KEY = "glq0VDZWt07dtBPsgfYjslGmd400xXadacFfr6YJ"
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _asteroidList = MutableLiveData<List<Asteroid>>()
+    private val database = AsteroidDatabase.getInstance(application)
+    private val repository = AsteroidRepository(database)
+
+    private val _asteroidList = repository.asteroids
     val asteroidList: LiveData<List<Asteroid>>
         get() = _asteroidList
 
@@ -35,14 +39,7 @@ class MainViewModel : ViewModel() {
 
     private fun getAsteroids() {
         viewModelScope.launch {
-            try {
-                val jsonStr = NasaApi.RetrofitScalarService.getAsteroids("2021-01-13", API_KEY)
-                val jsonObject = JSONObject(jsonStr)
-                _asteroidList.value = parseAsteroidsJsonResult(jsonObject)
-                Timber.i(asteroidList.value?.size.toString())
-            } catch (e: Exception) {
-                Timber.i(e.message)
-            }
+            repository.refreshAsteroids()
         }
     }
 
