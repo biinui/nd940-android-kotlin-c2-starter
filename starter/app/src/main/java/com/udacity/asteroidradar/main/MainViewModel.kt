@@ -3,6 +3,7 @@ package com.udacity.asteroidradar.main
 import android.app.Application
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.api.NasaApi
+import com.udacity.asteroidradar.api.isNetworkAvailable
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.domain.PictureOfDay
@@ -39,8 +40,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         get() = _pictureOfDay
 
     init {
-        getAsteroids()
-        getPictureOfDay()
+        if (isNetworkAvailable(application)) {
+            getAsteroids()
+            getPictureOfDay()
+        }
     }
 
     private fun getAsteroids() {
