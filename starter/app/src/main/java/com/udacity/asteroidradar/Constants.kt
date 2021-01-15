@@ -14,3 +14,11 @@ fun TODAY(): String {
     val formatter = SimpleDateFormat("yyyy-MM-dd")
     return formatter.format(today)
 }
+
+fun SEVEN_DAYS_FROM_NOW(): String {
+    val calendar = Calendar.getInstance();
+    calendar.add(Calendar.DAY_OF_YEAR, 7)
+    val newDate = calendar.time
+    val formatter = SimpleDateFormat("yyyy-MM-dd")
+    return formatter.format(newDate)
+}

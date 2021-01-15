@@ -15,12 +15,7 @@ import org.json.JSONObject
 
 private const val API_KEY = "glq0VDZWt07dtBPsgfYjslGmd400xXadacFfr6YJ"
 
-
 class AsteroidRepository(private val database: AsteroidDatabase) {
-
-    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getAllAsteroids(TODAY())) { databaseAsteroidList ->
-        databaseAsteroidList.asDomainModel()
-    }
 
     suspend fun refreshAsteroids() {
         withContext(Dispatchers.IO) {
@@ -45,6 +40,24 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
     suspend fun deleteOldAsteroids() {
         database.asteroidDao.deleteAsteroidsBeforeToday()
+    }
+
+    fun showAsteroidsToday(): LiveData<List<Asteroid>> {
+        return Transformations.map(database.asteroidDao.getAllAsteroidsToday()) { databaseAsteroidList ->
+            databaseAsteroidList.asDomainModel()
+        }
+    }
+
+    fun showAsteroidsThisWeek(): LiveData<List<Asteroid>> {
+        return Transformations.map(database.asteroidDao.getAllAsteroidsThisWeek()) { databaseAsteroidList ->
+            databaseAsteroidList.asDomainModel()
+        }
+    }
+
+    fun showAsteroidsSaved(): LiveData<List<Asteroid>> {
+        return Transformations.map(database.asteroidDao.getAllAsteroids()) { databaseAsteroidList ->
+            databaseAsteroidList.asDomainModel()
+        }
     }
 
 }

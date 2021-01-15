@@ -22,4 +22,5 @@
     <string name="asteroid_name">Asteroid name</string>
     <string name="asteroid_close_approach_date">Asteroid close approach date</string>
     <string name="asteroid_is_potentially_hazardous_image">Asteroid is potentially hazardous image</string>
+    <string name="list_of_asteroids">List of asteroids</string>
 </resources>
