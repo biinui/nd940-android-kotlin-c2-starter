@@ -1,3 +1,9 @@
+# Gentle Note for Reviewer on API_KEY
+
+Kindly insert your API_KEY in com.udacity.asteroidradar.constants
+DEMO_KEY is the default key so you can still run the app without inserting your API_KEY albeit with limited requests per hour or day.
+Thank you very much.
+
 # Project Title
 
 Asteroid Radar
