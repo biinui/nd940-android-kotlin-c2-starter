@@ -2,6 +2,7 @@ package com.udacity.asteroidradar.main
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.api.isNetworkAvailable
 import com.udacity.asteroidradar.database.AsteroidDatabase
@@ -81,5 +82,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun onUpdateFilterToSaved() {
         _asteroidFilter.value = AsteroidFilter.SHOW_SAVED
+    }
+
+    val pictureOfDayContentDescription = Transformations.map(pictureOfDay) {
+        application.applicationContext.getString(R.string.nasa_picture_of_day_content_description_format, pictureOfDay.value?.title)
     }
 }
