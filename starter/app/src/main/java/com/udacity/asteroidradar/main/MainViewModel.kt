@@ -2,6 +2,7 @@ package com.udacity.asteroidradar.main
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.udacity.asteroidradar.Constants.API_KEY
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.api.isNetworkAvailable
@@ -13,7 +14,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 enum class AsteroidFilter(val filter: String) { SHOW_WEEK("week"), SHOW_TODAY("today"), SHOW_SAVED("saved") }
-private const val API_KEY = "glq0VDZWt07dtBPsgfYjslGmd400xXadacFfr6YJ"
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
