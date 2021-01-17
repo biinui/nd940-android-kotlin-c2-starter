@@ -42,7 +42,6 @@
             app:layout_constraintTop_toBottomOf="@+id/asteroid_name_text"
             tools:text="@string/asteroid_close_approach_date" />
 
-<!--        content description is programmatically set in AsteroidListAdapter.onBindViewHolder-->
         <ImageView
             android:id="@+id/potentially_hazardous_image"
             android:layout_width="wrap_content"
@@ -53,6 +52,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:statusIconContentDescription="@{asteroid.potentiallyHazardous}"
             app:statusIcon="@{asteroid.potentiallyHazardous}"
             tools:srcCompat="@drawable/ic_status_potentially_hazardous" />
     </androidx.constraintlayout.widget.ConstraintLayout>
