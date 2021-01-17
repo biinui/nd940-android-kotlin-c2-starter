@@ -5,8 +5,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.udacity.asteroidradar.SEVEN_DAYS_FROM_NOW
-import com.udacity.asteroidradar.TODAY
+import com.udacity.asteroidradar.getDateSevenDaysFromToday
+import com.udacity.asteroidradar.getDateToday
 
 @Dao
 interface AsteroidDatabaseDao {
@@ -18,12 +18,12 @@ interface AsteroidDatabaseDao {
     fun getAllAsteroids(): LiveData<List<DatabaseAsteroid>>
 
     @Query("SELECT * FROM asteroids_table WHERE close_approach_date == :today ORDER BY close_approach_date")
-    fun getAllAsteroidsToday(today: String = TODAY()): LiveData<List<DatabaseAsteroid>>
+    fun getAllAsteroidsToday(today: String = getDateToday()): LiveData<List<DatabaseAsteroid>>
 
     @Query("SELECT * FROM asteroids_table WHERE close_approach_date >= :startDate AND close_approach_date <= :endDate ORDER BY close_approach_date")
-    fun getAllAsteroidsThisWeek(startDate: String = TODAY(), endDate: String = SEVEN_DAYS_FROM_NOW()): LiveData<List<DatabaseAsteroid>>
+    fun getAllAsteroidsThisWeek(startDate: String = getDateToday(), endDate: String = getDateSevenDaysFromToday()): LiveData<List<DatabaseAsteroid>>
 
     @Query("DELETE FROM asteroids_table WHERE close_approach_date < :today")
-    fun deleteAsteroidsBeforeToday(today: String = TODAY())
+    fun deleteAsteroidsBeforeToday(today: String = getDateToday())
 
 }

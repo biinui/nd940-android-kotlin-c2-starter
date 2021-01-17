@@ -10,13 +10,13 @@ object Constants {
     const val API_KEY = "DEMO_KEY"
 }
 
-fun TODAY(): String {
+fun getDateToday(): String {
     val today = Calendar.getInstance().time
     val formatter = SimpleDateFormat("yyyy-MM-dd")
     return formatter.format(today)
 }
 
-fun SEVEN_DAYS_FROM_NOW(): String {
+fun getDateSevenDaysFromToday(): String {
     val calendar = Calendar.getInstance();
     calendar.add(Calendar.DAY_OF_YEAR, 7)
     val newDate = calendar.time
